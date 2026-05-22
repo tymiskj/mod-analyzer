@@ -1,10 +1,16 @@
 import path from 'path';
 
+const RELEVANT_EXTENSIONS = ['.json', '.lua', '.xml', '.script', '.txt'];
+
 export function findConflicts(filePaths, baseFolder) {
     const fileMap = new Map();
     const conflicts = [];
 
     for (const filePath of filePaths) {
+        const ext = path.extname(filePath).toLowerCase();
+        
+        if (!RELEVANT_EXTENSIONS.includes(ext)) continue;
+
         const relative = path.relative(baseFolder, filePath);
         const pathParts = relative.split(path.sep);
         
